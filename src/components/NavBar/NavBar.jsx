@@ -3,14 +3,14 @@ import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } fr
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@mui/material/styles';
-import { Sidebar } from '..';
+import { Sidebar, Search } from '..';
 import useStyles from './styles';
 
 function NavBar() {
   const classes = useStyles();
   const isMobile = useMediaQuery('(max-width:600px)');
   const theme = useTheme();
-  const isAuthenticated = true;
+  const isAuthenticated = false;
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
@@ -32,7 +32,7 @@ function NavBar() {
             {theme.palette.type === 'dark' ? <Brightness7 /> : <Brightness4 />}
 
           </IconButton>
-          {!isMobile && 'Search...'}
+          {!isMobile && <Search />}
           <div>
             {!isAuthenticated ? (
               <Button color="inherit" onClick={() => {}}>
@@ -51,12 +51,12 @@ function NavBar() {
                 <Avatar
                   style={{ width: 30, height: 30 }}
                   alt="Profile"
-                  src="https://picsum.photos/200/300"
+                  src="../../assets/Avatar.png"
                 />
               </Button>
             )}
           </div>
-          {isMobile && 'Search...'}
+          {isMobile && <Search />}
         </Toolbar>
       </AppBar>
       <div>
