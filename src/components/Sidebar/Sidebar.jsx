@@ -36,7 +36,7 @@ export default function Sidebar({ setMobileOpen }) {
           <Link key={value} className={classes.links} to="/">
             <ListItem onClick={() => dispatch(selectGenreOrCategory(value))} button>
               <ListItemIcon>
-                <img src={lightLogo} className={classes.genreImages} height={30} />
+                <img src={genreIcons[label.toLowerCase()]} className={classes.genreImages} height={30} />
               </ListItemIcon>
               <ListItemText primary={label} />
             </ListItem>

@@ -55,7 +55,6 @@ function NavBar() {
           ) }
           <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
             {theme.palette.type === 'dark' ? <Brightness7 /> : <Brightness4 />}
-
           </IconButton>
           {!isMobile && <Search />}
           <div>
