@@ -8,8 +8,8 @@ import useStyles from './styles';
 import genreIcons from '../../assets/genres';
 import { selectGenreOrCategory } from '../../features/currentGenreCategory';
 
-const lightLogo = 'https://picsum.photos/200/300';
-const darkLogo = 'https://picsum.photos/200/300';
+const lightLogo = '/src/assets/images/SMovies.png';
+const darkLogo = '/src/assets/images/SMovies-modified.png';
 
 const categories = [
   { label: 'Popular', value: 'popular' },
