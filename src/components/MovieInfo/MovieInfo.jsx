@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Typography, Button, ButtonGroup, Grid, Box, CircularProgress, useMediaQuery, Rating } from '@mui/material';
 import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBorderOutlined, Remove, ArrowBack } from '@mui/icons-material';
 import { Link, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import { selectGenreOrCategory } from '../../features/currentGenreCategory';
 
 import useStyles from './styles';
-import { useGetMovieQuery } from '../../services/TMDB';
+import { useGetMovieQuery, useGetRecommendationsQuery } from '../../services/TMDB';
 import genreIcons from '../../assets/genres';
+import { MovieList } from '..';
 
 function MovieInfo() {
   const { id } = useParams();
-  const { data, isFetching, error } = useGetMovieQuery(id);
+  const { data, isFetching } = useGetMovieQuery(id);
   const classes = useStyles();
   const dispatch = useDispatch();
+  const [open, setOpen] = useState(false);
+
+  const { data: recommendations } = useGetRecommendationsQuery(id);
 
   const addToFav = () => {};
   const isMovieFav = false;
@@ -47,7 +50,7 @@ function MovieInfo() {
               {data?.vote_average} / 10
             </Typography>
           </Box>
-          <Typography variant="h6" align="center" gutterBottom>
+          <Typography variant="h5" align="center" gutterBottom>
             {data?.runtime} min {data?.spoken_languages.length > 0 ? `/ ${data?.spoken_languages[0].name}` : ''}  <br />
           </Typography>
         </Grid>
@@ -95,7 +98,7 @@ function MovieInfo() {
                 <Button target="_blank" rel="noopener noreferrer" href={`https://imdb.com/title/${data?.imdb_id}`} endIcon={<MovieIcon />}>
                   IMDB
                 </Button>
-                <Button onClick={() => {}} href="#" endIcon={<Theaters />}>
+                <Button onClick={() => setOpen(true)} href="#" endIcon={<Theaters />}>
                   Trailer
                 </Button>
               </ButtonGroup>
@@ -124,6 +127,26 @@ function MovieInfo() {
           </div>
         </Grid>
       </Grid>
+      <Box marginTop="5rem" width="100%">
+        <Typography variant="h3" align="center" gutterBottom>
+          You May Also Like
+        </Typography>
+        {recommendations
+          ? <MovieList movies={recommendations} numberOfMovies={12} />
+          : (
+            <Box display="flex" justifyContent="center" alignItems="center"> <CircularProgress size="8rem" />
+            </Box>
+          )}
+      </Box>
+      <Modal closeAfterTransition className={classes.modal} open={open} onClose={() => setOpen(false)}>
+        {data?.videos?.results?.length > 0
+          ? <iframe autoPlay className={classes.video} title="Trailer" frameBorder="0" src={`https://www.youtube.com/embed/${data.videos.results[0].key}`} allow="autoplay" />
+          : (
+            <Typography variant="h5" align="center" gutterBottom>
+              No Trailer Available
+            </Typography>
+          )}
+      </Modal>
     </Grid>
   );
 }

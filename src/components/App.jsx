@@ -1,7 +1,7 @@
 import React from 'react';
 import { CssBaseline } from '@mui/material';
 import { Route, Switch } from 'react-router-dom';
-import { Actors, MovieInfo, Movies, NavBar, Profile } from './index';
+import { Actor, MovieInfo, Movies, NavBar, Profile } from './index';
 import useStyles from './styles';
 
 function App() {
@@ -20,8 +20,8 @@ function App() {
           <Route exact path="/movie/:id">
             <MovieInfo />
           </Route>
-          <Route exact path="/actors/:id">
-            <Actors />
+          <Route exact path="/actor/:id">
+            <Actor />
           </Route>
           <Route exact path="/profile/:id">
             <Profile />
