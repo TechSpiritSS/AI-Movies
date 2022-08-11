@@ -33,7 +33,7 @@ function MovieInfo() {
   }
   return (
     <Grid container className={classes.containerSpaceAround}>
-      <Grid item xs={12} sm={6} lg={4}>
+      <Grid item sm={12} lg={4} style={{ display: 'flex', marginBottom: '30px' }}>
         <img className={classes.poster} src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`} alt={data?.title} />
       </Grid>
       <Grid item container direction="column" xs={12} sm={6} lg={8}>
@@ -51,7 +51,7 @@ function MovieInfo() {
             </Typography>
           </Box>
           <Typography variant="h5" align="center" gutterBottom>
-            {data?.runtime} min {data?.spoken_languages.length > 0 ? `/ ${data?.spoken_languages[0].name}` : ''}  <br />
+            {data?.runtime} min | Language: {data?.spoken_languages[0].name} <br />
           </Typography>
         </Grid>
         <Grid item className={classes.genresContainer}>
