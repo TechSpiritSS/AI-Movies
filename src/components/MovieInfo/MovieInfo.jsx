@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Typography, Button, ButtonGroup, Grid, Box, CircularProgress, useMediaQuery, Rating } from '@mui/material';
+import { Modal, Typography, Button, ButtonGroup, Grid, Box, CircularProgress, Rating } from '@mui/material';
 import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBorderOutlined, Remove, ArrowBack } from '@mui/icons-material';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -91,7 +91,7 @@ function MovieInfo() {
         </Grid>
         <Typography variant="h5" align="center" gutterBottom style={{ marginTop: '10px' }}>
           Overview
-          <Typography style={{ marginBottom: '10px' }} variant="subtitle1" align="justify" gutterBottom>
+          <Typography style={{ marginBottom: '10px' }} variant="body1" align="justify" gutterBottom>
             {data?.overview}
           </Typography>
         </Typography>
@@ -101,7 +101,7 @@ function MovieInfo() {
         <Grid item container spacing={2}>
           {data && data?.credits?.cast?.map((cast) => (
             cast.profile_path && (
-            <Grid item spacing={2} key={cast.id} component={Link} to={`/actor/${cast.id}`} style={{ textDecoration: 'none' }}>
+            <Grid item key={cast.id} component={Link} to={`/actor/${cast.id}`} style={{ textDecoration: 'none' }}>
               <img className={classes.castImage} src={`https://image.tmdb.org/t/p/w500${cast.profile_path}`} alt={cast.name} />
               <Typography variant="subtitle1" gutterBottom color="textPrimary">
                 {cast.name}
@@ -115,7 +115,7 @@ function MovieInfo() {
         </Grid>
         <Grid item container style={{ marginTop: '2rem' }}>
           <div className={classes.buttonsContainer}>
-            <Grid item sx={12} sm={6} className={classes.buttonsContainer}>
+            <Grid item sm={6} className={classes.buttonsContainer}>
               <ButtonGroup size="medium" variant="outlined">
                 <Button target="_blank" rel="noopener noreferrer" href={data?.homepage} endIcon={<Language />}>
                   Website
@@ -128,7 +128,7 @@ function MovieInfo() {
                 </Button>
               </ButtonGroup>
             </Grid>
-            <Grid item sx={12} sm={6} className={classes.buttonsContainer}>
+            <Grid item sm={6} className={classes.buttonsContainer}>
               <ButtonGroup size="medium" variant="outlined">
                 <Button
                   onClick={addToFav}
@@ -142,8 +142,8 @@ function MovieInfo() {
                 >
                   WatchList
                 </Button>
-                <Button onClick={() => {}} endIcon={<ArrowBack />} sx={{ borderColor: 'primary.main' }}>
-                  <Typography style={{ textDecoration: 'none' }} component={Link} to="/" variant="subtitle1" color="inherit">
+                <Button onClick={() => {}} endIcon={<ArrowBack />} style={{ borderColor: 'primary.main' }}>
+                  <Typography style={{ textDecoration: 'none' }} component={Link} to="/" variant="subtitle" color="inherit">
                     Back
                   </Typography>
                 </Button>

@@ -17,7 +17,7 @@ const categories = [
   { label: 'Upcoming', value: 'upcoming' },
 ];
 
-export default function Sidebar({ setMobileOpen }) {
+export default function Sidebar() {
   const { genreIdOrCategoryName } = useSelector((state) => state.currentGenreCategory);
   const theme = useTheme();
   const classes = useStyles();

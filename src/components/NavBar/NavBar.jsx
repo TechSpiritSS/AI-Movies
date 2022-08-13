@@ -97,14 +97,13 @@ function NavBar() {
               classes={{ paper: classes.drawerPaper }}
               ModalProps={{ keepMounted: true }}
             >
-              <Sidebar setMobileOpen={setMobileOpen} />
+              <Sidebar />
             </Drawer>
           ) : (
             <Drawer
               classes={{ paper: classes.drawerPaper }}
               variant="permanent"
               open
-              setMobileOpen={setMobileOpen}
             >
               <Sidebar />
             </Drawer>
