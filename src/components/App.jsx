@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { CssBaseline } from '@mui/material';
 import { Route, Switch } from 'react-router-dom';
 import { Actor, MovieInfo, Movies, NavBar, Profile } from './index';
 import useStyles from './styles';
+import useAlanAI from './AlanAI';
 
 function App() {
   const classes = useStyles();
+  const ALanBtnContainer = useRef();
+  useAlanAI();
 
   return (
     <div className={classes.root}>
@@ -28,6 +31,7 @@ function App() {
           </Route>
         </Switch>
       </main>
+      <div ref={ALanBtnContainer} />
     </div>
   );
 }
