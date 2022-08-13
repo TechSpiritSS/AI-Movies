@@ -27,7 +27,7 @@ export default function Sidebar({ setMobileOpen }) {
   return (
     <>
       <Link to="/" className={classes.imageLink}>
-        <img className={classes.image} src={theme.palette.mode === 'light' ? lightLogo : darkLogo} alt="AI-Movies Logo" />
+        <img className={classes.image} src={theme.palette.mode === 'light' ? lightLogo : darkLogo} alt="S Movies" />
       </Link>
       <Divider />
       <List>

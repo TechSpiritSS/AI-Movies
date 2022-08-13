@@ -1,29 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Typography, Button, ButtonGroup, Grid, Box, CircularProgress, useMediaQuery, Rating } from '@mui/material';
 import { Movie as MovieIcon, Theaters, Language, PlusOne, Favorite, FavoriteBorderOutlined, Remove, ArrowBack } from '@mui/icons-material';
 import { Link, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import { selectGenreOrCategory } from '../../features/currentGenreCategory';
 
 import useStyles from './styles';
-import { useGetMovieQuery, useGetRecommendationsQuery } from '../../services/TMDB';
+import { useGetListQuery, useGetMovieQuery, useGetRecommendationsQuery } from '../../services/TMDB';
 import genreIcons from '../../assets/genres';
 import { MovieList } from '..';
 
 function MovieInfo() {
+  const { user } = useSelector((state) => state.user);
   const { id } = useParams();
-  const { data, isFetching } = useGetMovieQuery(id);
   const classes = useStyles();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [isMovieFav, setIsMovieFav] = useState(false);
+  const [isMovieWatchlist, setIsMovieWatchlist] = useState(false);
 
+  const { data, isFetching } = useGetMovieQuery(id);
+  const { data: favMovies } = useGetListQuery({ listName: 'favorite/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1 });
+  const { data: watchlistMovies } = useGetListQuery({ listName: 'watchlist/movies', accountId: user.id, sessionId: localStorage.getItem('session_id'), page: 1 });
   const { data: recommendations } = useGetRecommendationsQuery(id);
 
-  const addToFav = () => {};
-  const isMovieFav = false;
+  useEffect(() => {
+    setIsMovieFav(!!favMovies?.results?.find((movie) => movie?.id === data?.id));
+  }, [favMovies, data]);
+  useEffect(() => {
+    setIsMovieWatchlist(!!watchlistMovies?.results?.find((movie) => movie?.id === data?.id));
+  }, [watchlistMovies, data]);
 
-  const addToWatch = () => {};
-  const isMovieWatch = false;
+  const addToFav = async () => {
+    await axios.post(`https://api.themoviedb.org/3/account/${user.id}/favorite?api_key=${import.meta.env.VITE_API_KEY}&session_id=${localStorage.getItem('session_id')}`, {
+      media_type: 'movie',
+      media_id: id,
+      favorite: !isMovieFav,
+    });
+    setIsMovieFav((prev) => !prev);
+  };
+
+  const addToWatch = async () => {
+    await axios.post(`https://api.themoviedb.org/3/account/${user.id}/watchlist?api_key=${import.meta.env.VITE_API_KEY}&session_id=${localStorage.getItem('session_id')}`, {
+      media_type: 'movie',
+      media_id: id,
+      watchlist: !isMovieWatchlist,
+    });
+    setIsMovieWatchlist((prev) => !prev);
+  };
 
   if (isFetching) {
     return (
@@ -113,7 +138,7 @@ function MovieInfo() {
                 </Button>
                 <Button
                   onClick={addToWatch}
-                  endIcon={isMovieWatch ? <Remove /> : <PlusOne />}
+                  endIcon={isMovieWatchlist ? <Remove /> : <PlusOne />}
                 >
                   WatchList
                 </Button>

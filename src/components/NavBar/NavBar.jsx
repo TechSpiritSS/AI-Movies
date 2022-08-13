@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { AppBar, IconButton, Toolbar, Drawer, Button, Avatar, useMediaQuery } from '@mui/material';
 import { Menu, AccountCircle, Brightness4, Brightness7 } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { DarkModeContext } from '../../utils/ToggleDark';
 import useStyles from './styles';
 import { Search, Sidebar } from '../index';
 import { setUser } from '../../features/auth';
@@ -17,6 +18,8 @@ function NavBar() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleDarkMode = useContext(DarkModeContext);
 
   const token = localStorage.getItem('request_token');
   const sessionIdFromLocalStorage = localStorage.getItem('session_id');
@@ -53,8 +56,8 @@ function NavBar() {
             <Menu />
           </IconButton>
           ) }
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
-            {theme.palette.type === 'dark' ? <Brightness7 /> : <Brightness4 />}
+          <IconButton color="inherit" sx={{ ml: 1 }} onClick={handleDarkMode.toggleDarkMode}>
+            {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
           {!isMobile && <Search />}
           <div>
@@ -66,7 +69,7 @@ function NavBar() {
               <Button
                 color="inherit"
                 component={Link}
-                to={`profile/${user.id}`}
+                to={`/profile/${user.id}`}
                 className={classes.linkButton}
                 onClick={() => {}}
               >
