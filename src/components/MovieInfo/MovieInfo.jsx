@@ -61,7 +61,7 @@ function MovieInfo() {
       <Grid item sm={12} lg={4} style={{ display: 'flex', marginBottom: '30px' }}>
         <img className={classes.poster} src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`} alt={data?.title} />
       </Grid>
-      <Grid item container direction="column" xs={12} sm={6} lg={8}>
+      <Grid item container direction="column" sm={6} lg={8}>
         <Typography variant="h4" align="center" gutterBottom>
           {data?.title} ({data?.release_date?.substring(0, 4)})
         </Typography>
@@ -116,7 +116,7 @@ function MovieInfo() {
         <Grid item container style={{ marginTop: '2rem' }}>
           <div className={classes.buttonsContainer}>
             <Grid item sm={6} className={classes.buttonsContainer}>
-              <ButtonGroup size="medium" variant="outlined">
+              <ButtonGroup size="small" variant="outlined">
                 <Button target="_blank" rel="noopener noreferrer" href={data?.homepage} endIcon={<Language />}>
                   Website
                 </Button>
@@ -129,7 +129,7 @@ function MovieInfo() {
               </ButtonGroup>
             </Grid>
             <Grid item sm={6} className={classes.buttonsContainer}>
-              <ButtonGroup size="medium" variant="outlined">
+              <ButtonGroup size="small" variant="outlined">
                 <Button
                   onClick={addToFav}
                   endIcon={isMovieFav ? <Favorite /> : <FavoriteBorderOutlined />}

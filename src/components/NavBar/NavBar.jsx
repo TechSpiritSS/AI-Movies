@@ -57,7 +57,7 @@ function NavBar() {
           </IconButton>
           ) }
           <IconButton color="inherit" sx={{ ml: 1 }} onClick={handleDarkMode.toggleDarkMode}>
-            {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
+            {theme.palette.mode === 'dark' ? <Brightness4 /> : <Brightness7 />}
           </IconButton>
           {!isMobile && <Search />}
           <div>
@@ -78,7 +78,7 @@ function NavBar() {
                 <Avatar
                   style={{ width: 30, height: 30 }}
                   alt="Profile"
-                  src=""
+                  src={`https://image.tmdb.org/t/p/w64_and_h64_face/${user?.avatar?.tmdb?.avatar_path}`}
                 />
               </Button>
             )}
@@ -97,7 +97,7 @@ function NavBar() {
               classes={{ paper: classes.drawerPaper }}
               ModalProps={{ keepMounted: true }}
             >
-              <Sidebar />
+              <Sidebar setMobileOpen={setMobileOpen} />
             </Drawer>
           ) : (
             <Drawer
@@ -105,7 +105,7 @@ function NavBar() {
               variant="permanent"
               open
             >
-              <Sidebar />
+              <Sidebar setMobileOpen={setMobileOpen} />
             </Drawer>
           )}
         </nav>

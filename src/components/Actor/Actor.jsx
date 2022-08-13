@@ -32,10 +32,10 @@ function Actor() {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6} lg={4}>
+        <Grid item sm={6} lg={4}>
           <img className={classes.image} src={`https://image.tmdb.org/t/p/w500${data?.profile_path}`} alt={data?.name} />
         </Grid>
-        <Grid item container direction="column" xs={12} sm={6} lg={8}>
+        <Grid item container direction="column" sm={6} lg={8}>
           <Typography variant="h4" align="center" gutterBottom>
             {data?.name}
           </Typography>
