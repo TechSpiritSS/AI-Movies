@@ -4,7 +4,10 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { DarkModeContext } from '../utils/ToggleDark';
 import { fetchToken } from '../utils';
-import { selectGenreOrCategory, searchMovie } from '../features/currentGenreCategory';
+import {
+  selectGenreOrCategory,
+  searchMovie,
+} from '../features/currentGenreCategory';
 
 const useAlanAI = () => {
   const { setMode } = useContext(DarkModeContext);
@@ -13,16 +16,20 @@ const useAlanAI = () => {
 
   useEffect(() => {
     alanBtn({
-      key: 'b77699a7d430290efd1dcc7533e344e82e956eca572e1d8b807a3e2338fdd0dc/stage',
+      key: import.meta.env.VITE_ALAN_AI_KEY,
       onCommand: ({ command, mode, genres, genreOrCategory, query }) => {
         if (command === 'chooseGenre') {
-          const genreFound = genres.find((g) => g.name.toLowerCase() === genreOrCategory.toLowerCase());
+          const genreFound = genres.find(
+            (g) => g.name.toLowerCase() === genreOrCategory.toLowerCase()
+          );
 
           if (genreFound) {
             history.push('/');
             dispatch(selectGenreOrCategory(genreFound.id));
           } else {
-            const category = genreOrCategory.startsWith('top') ? 'top_rated' : genreOrCategory;
+            const category = genreOrCategory.startsWith('top')
+              ? 'top_rated'
+              : genreOrCategory;
             history.push('/');
             dispatch(selectGenreOrCategory(category));
           }
@@ -36,7 +43,8 @@ const useAlanAI = () => {
         } else if (command === 'search') {
           dispatch(searchMovie(query));
         }
-      } });
+      },
+    });
   }, []);
 };
 
